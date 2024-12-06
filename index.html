@@ -1,97 +1,80 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autocomplétion d'adresse avec PostGrid</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      font-size: 16px;
-    }
-    .suggestions {
-      border: 1px solid #ccc;
-      background: #fff;
-      position: absolute;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 1000;
-      width: 100%;
-    }
-    .suggestions div {
-      padding: 10px;
-      cursor: pointer;
-    }
-    .suggestions div:hover {
-      background-color: #f4f4f4;
-    }
-  </style>
-</head>
-<body>
-  <h1>Autocomplétion d'adresse</h1>
-  <div style="position: relative;">
-    <label for="address">Rechercher une adresse :</label>
-    <input type="text" id="address" placeholder="Entrez une adresse complète">
-    <div class="suggestions" id="suggestions"></div>
-  </div>
 
-  <!-- Script PostGrid -->
-  <script src="https://scripts.postgrid.com/autocomplete.min.js" data-pg-key="live_pk_2vRN2xvNhmNNDvHJYtWvXm"></script>
+<html lang="en">
+    <head>
+        <style>
+            .mt-3 {
+                margin-top: 30px;
+            }
+            label {
+                display: inline-block;
+                min-width: 200px !important;
+            }
+            .wrapper {
+                margin: 15px 0;
+            }
+            input[type='text'] {
+                min-width: 300px;
+                border: 1px solid transparent;
+                background-color: #f1f1f1;
+                padding: 10px;
+                font-size: 16px;
+            }
+            .error > ul > li {
+                color: red;
+            }
+            .generic-message > ul > li {
+                color: red;
+            }
+        </style>
+        <title>AutoComplete</title>
+    </head>
 
-  <script>
-    // Champ d'entrée pour l'adresse
-    const addressInput = document.getElementById("address");
-    const suggestionsDiv = document.getElementById("suggestions");
-
-    // Activer l'autocomplétion avec PostGrid
-    addressInput.addEventListener("input", () => {
-      const query = addressInput.value;
-
-      if (query.length < 3) {
-        suggestionsDiv.innerHTML = ""; // Effacer les suggestions si la saisie est trop courte
-        return;
-      }
-
-      // Utiliser le script PostGrid intégré pour fournir les suggestions
-      fetch("https://api.postgrid.com/v1/autocomplete", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "live_pk_2vRN2xvNhmNNDvHJYtWvXm"
-        },
-        body: JSON.stringify({ query: query })
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          suggestionsDiv.innerHTML = ""; // Effacer les anciennes suggestions
-
-          if (data && data.suggestions) {
-            data.suggestions.forEach((suggestion) => {
-              const suggestionDiv = document.createElement("div");
-              suggestionDiv.textContent = suggestion.complete_address;
-              suggestionDiv.addEventListener("click", () => {
-                addressInput.value = suggestion.complete_address;
-                suggestionsDiv.innerHTML = ""; // Effacer les suggestions après la sélection
-              });
-              suggestionsDiv.appendChild(suggestionDiv);
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Erreur lors de la récupération des suggestions :", error);
-        });
-    });
-  </script>
-</body>
+    <body>
+        <h1>Autocomplete Search</h1>
+        <form 
+            action="javascript:alert('Form Submitted')" 
+            data-pg-verify
+        >
+            <div class="wrapper">
+                <label for="line1">Line 1</label>
+                <input type="text" id="line1" data-pg-address-line1></input>
+                <div class="error" data-pg-address-line1-message></div>
+            </div>
+            <div class="wrapper">
+                <label for="line2">Line 2</label>
+                <input type="text" id="line2" data-pg-address-line2 />
+                <div class="error" data-pg-address-line2-message></div>
+            </div>
+            <div class="wrapper">
+                <label for="city">City</label>
+                <input type="text" id="city" data-pg-city />
+                <div class="error" data-pg-city-message></div>
+            </div>
+            <div class="wrapper">
+                <label for="state">State/Province</label>
+                <input type="text" id="state" data-pg-prov />
+                <div class="error" data-pg-prov-message></div>
+            </div>
+            <div class="wrapper">
+                <label for="zip">Zip/Postal Code</label>
+                <input type="text" id="zip" data-pg-pc />
+                <div class="error" data-pg-pc-message></div>
+            </div>
+            <div class="wrapper">
+                <label for="country">Country</label>
+                <input type="text" id="country" data-pg-country />
+                <div class="error" data-pg-country-message></div>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+        <div 
+            class="generic-message"
+            data-pg-generic-message>
+        </div>
+        <div data-pg-status></div>
+        <script 
+            src="https://scripts.postgrid.com/autocomplete.min.js"
+            data-pg-key="live_pk_2vRN2xvNhmNNDvHJYtWvXm"    
+        ></script>
+    </body>
 </html>
