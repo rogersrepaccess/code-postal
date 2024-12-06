@@ -1,80 +1,48 @@
-
-<html lang="en">
+<html>
     <head>
         <style>
-            .mt-3 {
-                margin-top: 30px;
-            }
-            label {
-                display: inline-block;
-                min-width: 200px !important;
-            }
-            .wrapper {
-                margin: 15px 0;
-            }
-            input[type='text'] {
-                min-width: 300px;
-                border: 1px solid transparent;
-                background-color: #f1f1f1;
-                padding: 10px;
-                font-size: 16px;
-            }
-            .error > ul > li {
-                color: red;
-            }
-            .generic-message > ul > li {
-                color: red;
+            form {
+                width: 400px;
+                display: flex;
+                flex-direction: column;
             }
         </style>
-        <title>AutoComplete</title>
     </head>
-
     <body>
-        <h1>Autocomplete Search</h1>
-        <form 
-            action="javascript:alert('Form Submitted')" 
-            data-pg-verify
-        >
-            <div class="wrapper">
-                <label for="line1">Line 1</label>
-                <input type="text" id="line1" data-pg-address-line1></input>
-                <div class="error" data-pg-address-line1-message></div>
-            </div>
-            <div class="wrapper">
-                <label for="line2">Line 2</label>
-                <input type="text" id="line2" data-pg-address-line2 />
-                <div class="error" data-pg-address-line2-message></div>
-            </div>
-            <div class="wrapper">
-                <label for="city">City</label>
-                <input type="text" id="city" data-pg-city />
-                <div class="error" data-pg-city-message></div>
-            </div>
-            <div class="wrapper">
-                <label for="state">State/Province</label>
-                <input type="text" id="state" data-pg-prov />
-                <div class="error" data-pg-prov-message></div>
-            </div>
-            <div class="wrapper">
-                <label for="zip">Zip/Postal Code</label>
-                <input type="text" id="zip" data-pg-pc />
-                <div class="error" data-pg-pc-message></div>
-            </div>
-            <div class="wrapper">
-                <label for="country">Country</label>
-                <input type="text" id="country" data-pg-country />
-                <div class="error" data-pg-country-message></div>
-            </div>
-            <input type="submit" value="Submit" />
-        </form>
-        <div 
-            class="generic-message"
-            data-pg-generic-message>
+      <form data-pg-verify>
+        <h2>PostGrid Autocomplete </h1>
+        <input type="text" placeholder="Address Line 1" data-pg-address-line1 />
+        <br />
+        <input type="text" placeholder="Address Line 2" data-pg-address-line2 />
+        <br />
+        <input type="text" placeholder="City" data-pg-city />
+        <br />
+        <input type="text" placeholder="Postal/ZIP code" data-pg-prov />
+        <br />
+        <input type="text" placeholder="Province/State" data-pg-pc />
+        <br />
+        <input type="text" placeholder="Country" data-pg-country />
+        <br />
+        <input type="submit" />
+        <div>
+          <span> Status: </span>
+          <span data-pg-status ></span>
         </div>
-        <div data-pg-status></div>
-        <script 
-            src="https://scripts.postgrid.com/autocomplete.min.js"
-            data-pg-key="live_pk_2vRN2xvNhmNNDvHJYtWvXm"    
-        ></script>
+        <div>
+          <div> Generic Errors: </div>
+          <div data-pg-generic-message ></div>
+        </div>
+        <div>
+          <div> Address Line 1 Errors: </div>
+          <div data-pg-address-line1-message ></div>
+        </div>
+      </form>
+      
+      <script
+    src="https://scripts.postgrid.com/autocomplete.min.js"
+    data-pg-key="live_pk_2vRN2xvNhmNNDvHJYtWvXm"
+    data-pg-country-filter="CA"
+></script>
+      
     </body>
 </html>
